@@ -1,0 +1,36 @@
+<div class="container">
+  <h1 class="title">Moroccan OCR - Identity Card</h1>
+  <p class="subtitle">
+    Upload a Moroccan identity card for advanced text recognition using OCR
+  </p>
+
+  <div class="upload-section">
+    <label for="file-upload" class="upload-button">
+      <span class="icon">&#8682;</span>
+      <span>Choose Image</span>
+    </label>
+    <input type="file" id="file-upload" (change)="onFileSelected($event)" />
+  </div>
+
+  <div *ngIf="imagePreview" class="preview-section">
+    <div class="preview-content">
+      <div class="image-container">
+        <h2 class="section-title">Uploaded Image</h2>
+        <img [src]="imagePreview" alt="Uploaded Preview" class="preview-image" />
+        <button
+          class="analyze-button"
+          (click)="analyzeImage()"
+          [disabled]="isAnalyzing"
+        >
+          {{ isAnalyzing ? 'Analyzing...' : 'Analyze' }}
+        </button>
+        <div *ngIf="isAnalyzing" class="loading-spinner"></div>
+      </div>
+    </div>
+
+    <div *ngIf="analysisResult" class="analysis-result">
+      <h3>Analysis Result:</h3>
+      <pre>{{ analysisResult }}</pre>
+    </div>
+  </div>
+</div>
