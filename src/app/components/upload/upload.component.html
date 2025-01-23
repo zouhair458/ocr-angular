@@ -1,36 +1,52 @@
 <div class="container">
-  <h1 class="title">Moroccan OCR - Identity Card</h1>
-  <p class="subtitle">
-    Upload a Moroccan identity card for advanced text recognition using OCR
-  </p>
+  <h1 class="title">OCR - Identity Card Check</h1>
+  <p class="subtitle">Upload or capture an image for identity validation.</p>
 
+  <!-- Upload Section -->
   <div class="upload-section">
     <label for="file-upload" class="upload-button">
       <span class="icon">&#8682;</span>
       <span>Choose Image</span>
     </label>
     <input type="file" id="file-upload" (change)="onFileSelected($event)" />
+    <button class="open-camera-button" (click)="openCamera()">Open Camera</button>
   </div>
 
+  <!-- Camera Section -->
+  <div *ngIf="isCameraOpen" class="camera-section">
+    <video autoplay></video>
+    <div class="camera-buttons">
+      <button class="capture-button" (click)="captureImage()">Capture</button>
+      <button class="close-camera-button" (click)="closeCamera()">Close Camera</button>
+    </div>
+  </div>
+
+  <!-- Preview Section -->
   <div *ngIf="imagePreview" class="preview-section">
     <div class="preview-content">
       <div class="image-container">
-        <h2 class="section-title">Uploaded Image</h2>
+        <h2 class="section-title">Image Preview</h2>
         <img [src]="imagePreview" alt="Uploaded Preview" class="preview-image" />
         <button
           class="analyze-button"
-          (click)="analyzeImage()"
+          (click)="analyzeImage('fre')"
           [disabled]="isAnalyzing"
         >
-          {{ isAnalyzing ? 'Analyzing...' : 'Analyze' }}
+          {{ isAnalyzing ? 'Analyzing...' : 'Analyze (French)' }}
         </button>
-        <div *ngIf="isAnalyzing" class="loading-spinner"></div>
+        <button
+          class="analyze-button"
+          (click)="analyzeImage('ara')"
+          [disabled]="isAnalyzing"
+        >
+          {{ isAnalyzing ? 'Analyzing...' : 'Analyze (Arabic)' }}
+        </button>
       </div>
     </div>
-
-    <div *ngIf="analysisResult" class="analysis-result">
-      <h3>Analysis Result:</h3>
-      <pre>{{ analysisResult }}</pre>
-    </div>
+  </div>
+  <!-- Analysis Result -->
+  <div *ngIf="analysisResult" class="analysis-result">
+    <h3>Analysis Result:</h3>
+    <pre>{{ analysisResult }}</pre>
   </div>
 </div>
